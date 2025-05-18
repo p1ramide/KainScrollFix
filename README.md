@@ -49,7 +49,8 @@ Uses SetWindowsHookEx to install a global mouse hook
 **Filters**:
 
 - Small deltas → blocked
-- Direction changes too fast → blocked\
+- Direction changes too fast → blocked
+  
 **Safe**: does not modify system files or drivers
 
 ### ✅ Features
