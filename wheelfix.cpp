@@ -15,7 +15,7 @@ LRESULT CALLBACK MouseProc(int code, WPARAM wParam, LPARAM lParam) {
         auto now = std::chrono::steady_clock::now();
         auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastScrollTime).count();
 
-        if ((delta * lastDelta < 0) && diff < 150) return 1; //if direction change too fast return 1
+        if ((delta * lastDelta < 0) && diff < 150) {} //if direction change too fast return 1
 
         lastDelta = delta;
         lastScrollTime = now;
