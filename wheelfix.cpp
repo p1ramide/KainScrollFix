@@ -9,16 +9,15 @@ LRESULT CALLBACK MouseProc(int code, WPARAM wParam, LPARAM lParam) {
     if (code == HC_ACTION && wParam == WM_MOUSEWHEEL) {
         auto* ms = (MSLLHOOKSTRUCT*)lParam;
         int delta = GET_WHEEL_DELTA_WPARAM(ms->mouseData);
+        if (abs(delta) >= 30) {
+            auto now = std::chrono::steady_clock::now();
+            auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastScrollTime).count();
 
-        if (abs(delta) < 30) return 1; //ignore too small scroll
+            if ((delta * lastDelta < 0) && diff < 150) {}
 
-        auto now = std::chrono::steady_clock::now();
-        auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastScrollTime).count();
-
-        if ((delta * lastDelta < 0) && diff < 150) {} //if direction change too fast return 1
-
-        lastDelta = delta;
-        lastScrollTime = now;
+            lastDelta = delta;
+            lastScrollTime = now;
+        }
     }
     return CallNextHookEx(mouseHook, code, wParam, lParam);
 }
